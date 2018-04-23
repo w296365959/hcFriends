@@ -1,0 +1,101 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk'
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+    defaultConfig {
+        applicationId "github.wzm.com.review_test"
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "arm64-v8a", "x86_64"
+        }
+    }
+    buildTypes {
+        release {
+            versionNameSuffix '.productId' //给applicationId修改下，添加一个后缀
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true //表示该程序可被任意调试，导致APP被恶意攻击者控制。
+
+        }
+    }
+    //为了解决部分第三方库重复打包了META-INF的问题
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/LICENSE'
+    }
+
+    repositories {//如果该模块被其他模块依赖，需要在该模块添加这个
+        maven {
+            url "http://mvn.mob.com/android"
+        }
+    }
+    MobSDK {
+        appKey "24863ae6b7ab4"
+        appSecret "4d332bc6aae5c47b72a7695076f46f6e"
+        // 在MobSDK的扩展中注册SMSSDK的相关信息
+        SMSSDK {
+
+        }
+
+        ShareSDK {
+            //平台配置信息
+            devInfo {
+                SinaWeibo {
+                    appKey "3162728831"
+                    appSecret "c27643dfb56b93a6927ab02a9af4ab49"
+                    callbackUri "http://open.weibo.com/apps/3162728831/privilege/oauth"
+                    shareByAppClient true //是否使用客户端分享
+                }
+                Wechat {
+                    appId "3103422463"
+                    appSecret "A6H9JMKIC42A"
+
+                    /*BypassApproval是绕过审核的标记，设置为true后AppId将被忽略，故不经过
+                    审核的应用也可以执行分享，但是仅限于分享文字和图片，不能分享其他类型，
+                    默认值为false  */
+                }
+                QQ {
+                    appId "3103422463"
+                    appKey "A6H9JMKIC42A"
+                    shareByAppClient true //true直接调用手机安装的改客户端的页面，false需要登录
+                }
+
+                Facebook {
+                    appKey "1412473428822331"
+                    appSecret "a42f4f3f867dc947b9ed6020c2e93558"
+                    callbackUri "https://mob.com"
+                }
+            }
+        }
+
+    }
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    //3D地图so及jar
+    //定位功能
+    //搜索功能
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:design:26.0.0-alpha1'
+    compile 'com.umeng.sdk:common:latest.integration'
+    compile 'com.umeng.sdk:analytics:latest.integration'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.amap.api:3dmap:latest.integration'
+    compile 'com.amap.api:location:latest.integration'
+    compile 'com.amap.api:search:latest.integration'
+    testCompile 'junit:junit:4.12'
+}

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="github.wzm.com.review_test">
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+    <!-- 添加如下权限，以便使用更多的第三方SDK和更精准的统计数据 -->
+    <!--用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+
+    <!-- 允许程序打开网络套接字 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 允许程序设置内置sd卡的写权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- 允许程序获取网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- 允许程序访问WiFi网络信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <!-- 允许程序读写手机状态和身份 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置，用于进行网络定位，6.0以上需要动态申请-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+
+
+    <!-- 当allowBackup标志值为true时，即可通过adb backup和adb restore来备份和恢复应用程序数据； -->
+    <!--
+当我们的项目的某些属性和第三方库中的属性有冲突时或者我们想修改第三方库中某些资源的属性时，我们就需要使用tools:replace来处理,
+    在你的Application节点中加入tools:replace来表示替换三方库中的相关属性
+    -->
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/service_scope03"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:name,android:allowBackup">
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5aa2507bb27b0a6620000260"/>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Wandoujia"/>
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="5448bbe5cd22c5830d574ea1154afe35"/>
+
+        <activity android:name=".lib_auther.LoginActivity">
+
+        </activity>
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity-alias
+            android:name=".Login"
+            android:enabled="true"
+            android:icon="@mipmap/img5"
+            android:targetActivity=".lib_auther.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
+
+        <activity
+            android:name=".Main2Activity"
+            android:process=":remote_s222"
+            android:theme="@android:style/Theme.Translucent"/>
+        <!--
+                <activity
+                android:name="com.mob.tools.MobUIShell"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar"
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="stateHidden|adjustResize" >
+                &lt;!&ndash; QQ和QQ空间分享 QQ登录的回调必须要配置的 &ndash;&gt;
+                <intent-filter>
+                    <data android:scheme="3103422463" />
+                    <action android:name="android.intent.action.VIEW" />
+                    <category android:name="android.intent.category.BROWSABLE" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                </intent-filter>
+            </activity>
+        -->
+
+        <activity
+            android:name=".EmptyActivity"
+            android:theme="@android:style/Theme.Translucent">
+        </activity>
+        <activity android:name=".lib_auther.AnimDrawableActivity"/>
+
+        <activity android:name=".lib_auther.ImgActivity"/>
+
+        <activity android:name=".MapActivity"/>
+
+
+        <service android:name="com.amap.api.location.APSService"/>
+    </application>
+
+</manifest>
